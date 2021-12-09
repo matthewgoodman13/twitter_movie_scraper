@@ -3,7 +3,7 @@ import pandas as pd
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', required=True, help='input tweets tsv file')
+    parser.add_argument('-i', required=True, help='input tweets file')
     parser.add_argument('-o', required=False, default='test_tweets_cleaned.tsv', help='output file')
     parser.add_argument('-d', required=False, default='\t', help='the file delimiter')
     return parser.parse_args()
