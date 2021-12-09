@@ -49,8 +49,8 @@ def main(**kwargs):
         for word, freq in low_freq_removed_tfs.items():
             results[topic][word] = freq * idf(word, all_docs)
         
-        with open(args.o, 'w') as f:
-            json.dump(results, f, indent=4)
+    with open(args.o, 'w') as f:
+        json.dump(results, f, indent=4)
         
 
 if __name__ == "__main__":
