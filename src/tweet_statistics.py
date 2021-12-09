@@ -7,14 +7,15 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', required=True, help='input tweets tsv file')
     parser.add_argument('-o', required=False, help='output file')
+    parser.add_argument('-d', required=False, default='\t', help='the file delimiter')
     return parser.parse_args()
 
 def count_rows_by_key(df: pd.DataFrame, k: str, col1: str, col2: str) -> dict:
     return json.loads(df[df[col1]==k][col2].value_counts().to_json())
 
 def main(**kwargs):
-    df = pd.read_csv(kwargs.get('i'), delimiter='\t')
-
+    df = pd.read_csv(kwargs.get('i'), delimiter=kwargs.get('delimiter'))
+    
     results = {'overall': {}, 'by_topic': {}, 'by_sentiment': {}, 'mean_text_length': -1}
     
     results['overall']['topics'] = json.loads(df['topics'].value_counts().to_json())
@@ -40,4 +41,4 @@ def main(**kwargs):
 
 if __name__ == "__main__":
     args = parse_arguments()
-    main(i=args.i, o=args.o)
+    main(i=args.i, o=args.o, delimiter=args.d)
