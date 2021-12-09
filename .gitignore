@@ -1,2 +1,8 @@
+# data
 data/.~lock.output.tsv#
+data/test_*
+
+# environment
+.vscode
+venv_*
 .env
