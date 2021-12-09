@@ -1,6 +1,7 @@
 # data
 data/.~lock.output.tsv#
 data/test_*
+test_*
 
 # environment
 .vscode

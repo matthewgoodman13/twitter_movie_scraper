@@ -1,6 +1,7 @@
 import argparse
 import json
 import pandas as pd
+import numpy as np
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -14,7 +15,7 @@ def count_rows_by_key(df: pd.DataFrame, k: str, col1: str, col2: str) -> dict:
 def main(**kwargs):
     df = pd.read_csv(kwargs.get('i'), delimiter='\t')
 
-    results = {'overall': {}, 'by_topic': {}, 'by_sentiment': {}}
+    results = {'overall': {}, 'by_topic': {}, 'by_sentiment': {}, 'mean_text_length': -1}
     
     results['overall']['topics'] = json.loads(df['topics'].value_counts().to_json())
     results['overall']['sentiments'] = json.loads(df['sentiments'].value_counts().to_json())
@@ -27,6 +28,8 @@ def main(**kwargs):
         k:count_rows_by_key(df, k, 'sentiments', 'topics')
         for k in results['overall']['sentiments'].keys() 
     }
+
+    results['mean_text_length'] = df['text'].apply(lambda s: s.split(' ')).apply(len).mean()
 
     if kwargs.get('o'):
         with open(kwargs.get('o'), 'w') as f:
